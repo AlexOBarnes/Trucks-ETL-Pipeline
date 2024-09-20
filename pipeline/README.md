@@ -48,3 +48,15 @@ python pipeline.py
 Additional `-l` argument can be added to log to file.
 
 ## How it works
+
+#### `pipeline.py`
+- Calls all other functions in the ETL pipeline.
+- Takes command line arguments in order to configure the logging of the pipeline.
+#### `extract.py`
+- Uses the `io` and `boto3` libraries to extract data from the S3 bucket, currently it checks the time of creation (which is stored in the file name) and only extracts files created in the last 3 hours.
+- Returns a `pandas` dataframe containing all the truck data.
+#### `transform.py`
+- Uses `pandas` to removes erroneous, extreme or missing data 
+- Returns a list of the cleaned data ready for upload.
+#### `load.py`
+- Uses `redshift-connector` to upload data to a redshift database
