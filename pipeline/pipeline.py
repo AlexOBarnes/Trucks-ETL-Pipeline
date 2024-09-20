@@ -1,4 +1,4 @@
-'''Extracts, transforms and loads data from the '''
+'''Extracts, transforms and loads data from the S3 bucket'''
 import argparse
 import logging
 from datetime import datetime as dt
