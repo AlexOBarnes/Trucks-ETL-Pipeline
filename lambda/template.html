@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Report: {{overview.date}}</title>
+    <style>
+        body {
+            font-family: 'Verdana', 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #444;
+            text-align: center;
+        }
+        h1{
+            margin-bottom: 40px;
+        }
+        table {
+            width: auto;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #4b0082;
+            color: white;
+            font-weight: bold;
+        }
+        td {
+            background-color: white;
+            color: #555;
+        }
+        tbody tr:nth-child(odd) td {
+            background-color: #f2f2f2;
+        }
+        tbody tr:hover td {
+            background-color: #e9f4ff;
+            cursor: pointer;
+        }
+        thead {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        table, th, td {
+            border: none;
+        }
+        .overview-table {
+            width: auto;
+            margin-bottom: 50px;
+        }
+        .overview-table th, .overview-table td {
+            text-align: center;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Daily Report: {{overview.date}}</h1>
+    <h2>Overview</h2>
+    <table>
+        <tr>
+            <th>Total Transactions</th>
+            <td>{{ overview.transactions }}</td>
+        </tr>
+        <tr>
+            <th>Total Income</th>
+            <td>{{ overview.total }}</td>
+        </tr>
+    </table>
+
+    <h2>Truck Data</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Truck Name</th>
+                <th>Transactions</th>
+                <th>Income</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for truck in grouped_data.truck %}
+            <tr>
+                <td>{{ truck.name }}</td>
+                <td>{{ truck.transactions }}</td>
+                <td>{{ truck.income }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Payment Method Data</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Payment Method</th>
+                <th>Transactions</th>
+                <th>Income</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for method in grouped_data.payment_method %}
+            <tr>
+                <td>{{ method.name }}</td>
+                <td>{{ method.transactions }}</td>
+                <td>{{ method.income }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Hourly Breakdown</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Transactions</th>
+                <th>Income</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for time in grouped_data.time %}
+            <tr>
+                <td>{{ time.time }}</td>
+                <td>{{ time.transactions }}</td>
+                <td>{{ time.income }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

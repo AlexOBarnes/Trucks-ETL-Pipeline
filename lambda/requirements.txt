@@ -1,0 +1,5 @@
+boto3
+jinja2
+pandas
+python-dotenv
+redshift_connector
