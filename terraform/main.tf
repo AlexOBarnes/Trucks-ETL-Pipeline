@@ -13,7 +13,7 @@ data "aws_subnet" "c13-public-subnet" {
 }
 
 data "aws_ecr_image" "pipeline-image"{
-    repository_name = "c13-alex-pipeline"
+    repository_name = "pipeline"
     image_tag = "latest"
 }
 
@@ -22,18 +22,18 @@ data "aws_iam_role" "execution-role" {
 }
 
 data "aws_ecs_cluster" "c13-cluster" {
-    cluster_name = "c13-ecs-cluster"
+    cluster_name = "ecs-cluster"
 }
 
 resource "aws_ecs_task_definition" "pipeline_task"{
-    family = "c13-alex_pipeline"
+    family = "pipeline"
     network_mode = "awsvpc"
     requires_compatibilities = ["FARGATE"]
     execution_role_arn = data.aws_iam_role.execution-role.arn
     cpu = 256
     memory = 512
     container_definitions = jsonencode([{   
-        name = "c13-alex-pipeline-container"
+        name = "pipeline-container"
         image = data.aws_ecr_image.pipeline-image.image_uri
         essential = true
         portMappings = [
@@ -83,7 +83,7 @@ resource "aws_ecs_task_definition" "pipeline_task"{
     logConfiguration= {
                 logDriver= "awslogs"
                 options= {
-                    awslogs-group= "/ecs/c13-alex-truck-pipeline"
+                    awslogs-group= "/ecs/truck-pipeline"
                     mode= "non-blocking"
                     awslogs-create-group= "true"
                     max-buffer-size= "25m"
@@ -149,16 +149,16 @@ data  "aws_iam_policy_document" "schedule-permissions-policy" {
 }
 
 resource "aws_iam_role" "schedule-role" {
-    name               = "c13-alex-pipeline-scheduler-role"
+    name               = "pipeline-scheduler-role"
     assume_role_policy = data.aws_iam_policy_document.schedule-trust-policy.json
     inline_policy {
-      name = "c13-alex-execution-policy"
+      name = "execution-policy"
       policy = data.aws_iam_policy_document.schedule-permissions-policy.json
     } 
 }
 
 resource "aws_scheduler_schedule" "hourly-schedule" {
-    name = "c13-alex-pipeline-schedule"
+    name = "pipeline-schedule"
     flexible_time_window {
       mode = "OFF"
     }
@@ -198,7 +198,7 @@ resource "aws_iam_role" "lambda_role" {
 
 
 resource "aws_lambda_function" "report-lambda" {
-  function_name = "c13-alex-report-lambda"
+  function_name = "report-lambda"
   package_type  = "Image"
   image_uri = var.IMAGE_URI
   role = aws_iam_role.lambda_role.arn
