@@ -23,3 +23,7 @@ git clone https://github.com/AlexOBarnes/Trucks-ETL-Pipeline.git
     - Dashboard
     - Terraform
 
+### Contributions
+Contributions are welcome! Please fork the repository and submit a pull request with your changes. Ensure that your code adheres to the project's coding standards, I use pylint to format my code, and is well-documented. Code must score above an 8 in pylint and the unit tests included in the repository must pass. 
+### License
+This project is licensed under the MIT License - Please see the attached file.
